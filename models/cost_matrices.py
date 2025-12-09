@@ -94,7 +94,7 @@ class CostMatrices:
                     #self.distance[i][one] = self.distance[i][one] * 1e8
                     #self.distance[one][i] = self.distance[one][i] * 1e8
 
-    def PlotTimeEffect(self):
+    def PlotTimeEffect(self, save_path=None):
         """ 
         Simple function which plots our Time Affecting Zones over our scatterplot
         
@@ -111,6 +111,8 @@ class CostMatrices:
 
         for i in range(len(self.notifications)):
             print(self.notifications[i])
+        
+        plt.figure(figsize=(12, 8))
 
         choice = ["Hill", "Bad Terrain", "Good Terrain", "Bottleneck"]
         plt.scatter(x,y,color = "navy", zorder = 10)
@@ -140,11 +142,16 @@ class CostMatrices:
         plt.xlim(longmin-5, longmax+5)
         plt.ylim(latmin-5, latmax+5)
         plt.axis('equal')
-        plt.show()    
+        
+        if save_path:
+            plt.savefig(save_path, bbox_inches='tight')
+            plt.close()
+        else:
+            plt.show()    
 
 
             
-    def PlotSafetyScale(self):
+    def PlotSafetyScale(self, save_path=None):
         """ 
         Simple function which plots our Safety metrics over our scatterplot. Darker colours imply less safe (and so costlier) routes.
         
@@ -154,6 +161,7 @@ class CostMatrices:
         num = self.num
         latmin, latmax, longmin, longmax = y.min(), y.max(), x.min(), x.max()
 
+        plt.figure(figsize=(10, 8))
         plt.scatter(x,y,color = "navy", zorder = 10)
         plt.title("Plot of Locations and Routes, shaded by safety level (darker is worse)")
         plt.xlabel("Longitude")
@@ -173,4 +181,9 @@ class CostMatrices:
         plt.xlim(longmin-5, longmax+5)
         plt.ylim(latmin-5, latmax+5)
         plt.axis('equal')
-        plt.show()
+        
+        if save_path:
+            plt.savefig(save_path, bbox_inches='tight')
+            plt.close()
+        else:
+            plt.show()
